@@ -1,9 +1,9 @@
 version: '3'
 services:
   auth:
-    build: rebble-auth-py
+    build: ../../apps/auth
     volumes:
-      - ./rebble-auth-py:/code
+      - ../../apps/auth:/code
     depends_on:
       - db
     environment:
@@ -14,9 +14,9 @@ services:
     env_file:
       - ./.env
   boot:
-    build: rebble-boot
+    build: ../../apps/boot
     volumes:
-      - ./rebble-boot:/code
+      - ../../apps/boot:/code
     environment:
       - DEBUG=1
       - HOST=0.0.0.0
@@ -24,7 +24,7 @@ services:
     env_file:
       - ./.env
   haproxy:
-    build: rebble-dev-fe
+    build: ../../dev/infra/haproxy-fe
     depends_on:
       - auth
       - boot
