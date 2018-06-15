@@ -6,9 +6,11 @@ services:
       - ../../apps/auth:/code
     depends_on:
       - db
+      - redis
     environment:
       - DEBUG=1
       - DATABASE_URL=postgres://postgres@db/postgres
+      - REDIS_URL=redis://redis/0
       - HOST=0.0.0.0
       - FLASK_APP=auth/__init__.py
     env_file:
@@ -23,12 +25,37 @@ services:
       - FLASK_APP=boot/__init__.py
     env_file:
       - ./.env
+  cohorts:
+    build: ../../apps/cohorts
+    volumes:
+      - ../../apps/cohorts:/code
+    depends_on:
+      - auth
+    environment:
+      - REBBLE_AUTH=http://auth:5000
+      - DEBUG=1
+      - HOST=0.0.0.0
+      - FLASK_APP=cohorts/__init__.py
+    env_file:
+      - ./.env
+  notif-app-icons:
+    build: ../../apps/notif-app-icons
+    volumes:
+      - ../../apps/notif-app-icons:/code
+    environment:
+      - HOST=0.0.0.0
+      - DEBUG=1
+      - FLASK_APP=icons.py
   haproxy:
     build: ../../dev/infra/haproxy-fe
     depends_on:
       - auth
       - boot
+      - cohorts
+      - notif-app-icons
     ports:
       - 80:80
   db:
     image: "postgres:alpine"
+  redis:
+    image: "redis:3.2-alpine"
