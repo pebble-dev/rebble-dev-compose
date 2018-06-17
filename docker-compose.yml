@@ -58,6 +58,14 @@ services:
       - notif-app-icons
     ports:
       - 80:80
+  oauth-redir:
+    build: ../../dev/infra/pebble-oauth-redir
+    volumes:
+      - ../../dev/infra/pebble-oauth-redir:/code
+    ports:
+      - 60000:60000
+    env_file:
+      - ./.env
   db:
     image: "postgres:alpine"
   redis:
