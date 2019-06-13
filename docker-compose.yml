@@ -57,15 +57,7 @@ services:
       - cohorts
       - notif-app-icons
     ports:
-      - 80:80
-  oauth-redir:
-    build: ../../dev/infra/pebble-oauth-redir
-    volumes:
-      - ../../dev/infra/pebble-oauth-redir:/code
-    ports:
-      - 60000:60000
-    env_file:
-      - ./.env
+      - "8086:80"
   db:
     image: "postgres:alpine"
   redis:
