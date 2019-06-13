@@ -53,6 +53,14 @@ services:
       - DEBUG=1
       - OAUTHLIB_INSECURE_TRANSPORT=1
       - FLASK_APP=icons.py
+  lp:
+    build: ../../apps/lp
+    volumes:
+      - ../../apps/lp:/code
+    environment:
+      - HOST=0.0.0.0
+      - DEBUG=1
+      - FLASK_APP=languages.py
   haproxy:
     build: ../../dev/infra/haproxy-fe
     depends_on:
@@ -60,6 +68,7 @@ services:
       - boot
       - cohorts
       - notif-app-icons
+      - lp
     ports:
       - "8086:80"
   db:
