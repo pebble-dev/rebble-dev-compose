@@ -9,6 +9,7 @@ services:
       - redis
     environment:
       - DEBUG=1
+      - OAUTHLIB_INSECURE_TRANSPORT=1
       - DATABASE_URL=postgres://postgres@db/postgres
       - REDIS_URL=redis://redis/0
       - HOST=0.0.0.0
@@ -23,6 +24,7 @@ services:
       - db
     environment:
       - DEBUG=1
+      - OAUTHLIB_INSECURE_TRANSPORT=1
       - DATABASE_URL=postgres://postgres@db/postgres
       - HOST=0.0.0.0
       - FLASK_APP=boot/__init__.py
@@ -37,6 +39,7 @@ services:
     environment:
       - REBBLE_AUTH=http://auth:5000
       - DEBUG=1
+      - OAUTHLIB_INSECURE_TRANSPORT=1
       - HOST=0.0.0.0
       - FLASK_APP=cohorts/__init__.py
     env_file:
@@ -48,6 +51,7 @@ services:
     environment:
       - HOST=0.0.0.0
       - DEBUG=1
+      - OAUTHLIB_INSECURE_TRANSPORT=1
       - FLASK_APP=icons.py
   haproxy:
     build: ../../dev/infra/haproxy-fe
