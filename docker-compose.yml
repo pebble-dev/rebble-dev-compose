@@ -61,6 +61,16 @@ services:
       - HOST=0.0.0.0
       - DEBUG=1
       - FLASK_APP=languages.py
+  weather:
+    build: ../../apps/weather
+    volumes:
+      - ../../apps/weather:/code
+    environment:
+      - HOST=0.0.0.0
+      - DEBUG=1
+      - FLASK_APP=weather
+    env_file:
+      - ./.env
   haproxy:
     build: ../../dev/infra/haproxy-fe
     depends_on:
@@ -69,6 +79,7 @@ services:
       - cohorts
       - notif-app-icons
       - lp
+      - weather
     ports:
       - "8086:80"
   db:
