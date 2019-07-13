@@ -85,6 +85,21 @@ services:
       - FLASK_APP=appstore
     env_file:
       - ./.env
+  timeline-sync:
+    build: ../../apps/timeline-sync
+    volumes:
+      - ../../apps/timeline-sync:/code
+    depends_on:
+      - db
+    environment:
+      - HOST=0.0.0.0
+      - DEBUG=1
+      - OAUTHLIB_INSECURE_TRANSPORT=1
+      - DATABASE_URL=postgres://postgres@db/timeline_sync
+      - FLASK_APP=timeline_sync
+      - TZ=UTC
+    env_file:
+      - ./.env
   haproxy:
     build: ../../dev/infra/haproxy-fe
     depends_on:
@@ -95,6 +110,7 @@ services:
       - lp
       - weather
       - appstore-api
+      - timeline-sync
     ports:
       - "8086:80"
   db:
