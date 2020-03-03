@@ -14,6 +14,7 @@ services:
       - REDIS_URL=redis://redis/0
       - HOST=0.0.0.0
       - FLASK_APP=auth/__init__.py
+      - DD_TRACE_AGENT_URL=https://ingest.lightstep.com:443
     env_file:
       - ./.env
   boot:
@@ -28,6 +29,7 @@ services:
       - DATABASE_URL=postgres://postgres@db/postgres
       - HOST=0.0.0.0
       - FLASK_APP=boot/__init__.py
+      - DD_TRACE_AGENT_URL=https://ingest.lightstep.com:443
     env_file:
       - ./.env
   cohorts:
